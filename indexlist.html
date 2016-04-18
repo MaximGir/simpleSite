@@ -1,0 +1,227 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <link rel="stylesheet/less" type="text/css" href="main.less" />
+    <link href="bootstrap-theme.css" rel="stylesheet" />
+    <link href="bootstrap.css" rel="stylesheet" />
+    <script src="less.js" type="text/javascript"></script>
+    <meta charset="utf-8">
+    <title>List worker</title>
+</head>
+
+<body id="list">
+    <div class="list-main">
+        <div class="list-table">
+            <table id="myTable" class="table table-hover table-bordered">
+                <thead>
+                    <tr>
+                        <th>Имя</th>
+                         <th>Фамилия</th>
+                        <th>Должность</th>
+                         <th>Прогулов</th>
+                         <td>Подробнее</td>
+                         <td>Уволить</td>
+                     </tr>
+                </thead>
+                <tbody>
+                <tr id="id1">
+                    <td class="fname">Ваня</td>
+                    <td class="sname">Иванов</td>
+                    <td class="stats">Уборщик</td>
+                    <td class="miss">0</td>
+                    <td>
+                        <button class="more btn btn-info">?</button>
+                    </td>
+                    <td>
+                        <button class="del btn btn-danger">Уволить</button>
+                    </td>
+                    <td class="imgs" hidden>images/1.jpg</td>
+                </tr>
+                <tr id="id2">
+                    <td class="fname">Леня</td>
+                    <td class="sname">Голубков</td>
+                    <td class="stats">Директор</td>
+                    <td class="miss">0</td>
+                    <td>
+                        <button class="more btn btn-info">?</button>
+                    </td>
+                    <td>
+                        <button class="del btn btn-danger">Уволить</button>
+                    </td>
+                    <td class="imgs" hidden>images/2.jpg</td>
+                </tr>
+                <tr id="id3">
+                    <td class="fname">Петя</td>
+                    <td class="sname">Петров</td>
+                    <td class="stats">Сотрудник</td>
+                    <td class="miss">0</td>
+                    <td>
+                        <button class="more btn btn-info">?</button>
+                    </td>
+                    <td>
+                        <button class="del btn btn-danger">Уволить</button>
+                    </td>
+                    <td class="imgs" hidden>images/3.jpg</td>
+                </tr>
+                <tr id="id4">
+                    <td class="fname">Сергей</td>
+                    <td class="sname">Сергеев</td>
+                    <td class="stats">Бухгалтер</td>
+                    <td class="miss">0</td>
+                    <td>
+                        <button class="more btn btn-info">?</button>
+                    </td>
+                    <td>
+                        <button class="del btn btn-danger"
+                        ">Уволить</button></td>
+                    <td class="imgs" hidden>images/4.jpg</td>
+                </tr>
+                </tbody>
+
+            </table>
+
+            <form class= action="" id="add_persons" method="post" onsubmit="addRow();return false;">
+                <fieldset>
+                    <legend>Добавить сотрудника</legend>
+                    <ul>
+                        <li>
+                            <label for="name">Имя</label>
+                            <input type="text" name="name" id="name" value="" size="12" tabindex="1" />
+                        </li>
+                        <li>
+                            <label for="surname">Фамилия</label>
+                            <input type="text" name="surname" id="surname" value="" size="12" tabindex="2" />
+                        </li>
+                        <li>
+                            <label for="status">Должность</label>
+                            <input type="text" name="status" id="status" value="" size="12" tabindex="3" />
+                        </li>
+                        <li>
+                            <label for="subm">Действия</label>
+                            <input  type="submit" name="subm" class="submit" value="Добавить
+                            " tabindex="4" />
+
+                        </li>
+                    </ul>
+                </fieldset>
+            </form>
+
+        </div>
+        <div class="list-button">
+            <button id="go" class="btn btn-primary" ">Вернуться на главную</button>
+        </div>
+    </div>
+
+
+
+    <script>
+
+        document.getElementById('go').onclick = function(){
+            document.location.href = "http://localhost/Site/indexmain.html";
+        };
+
+
+
+
+        var d = document;
+        var name, surname, status;
+
+        function addRow()
+        {
+            var btnmore = document.createElement('button');
+            btnmore.className = "more btn btn-info";
+            btnmore.innerHTML = "?";
+
+            var btndelete = document.createElement('button');
+            btndelete.className = "del btn btn-danger" ;
+            btndelete.innerHTML = "Уволить";
+
+            name = d.getElementById('name').value;
+            surname = d.getElementById('surname').value;
+            status = d.getElementById('status').value;
+            var tbody = d.getElementById('myTable').getElementsByTagName('TBODY')[0];
+            var row = d.createElement("TR");
+            tbody.appendChild(row);
+            var td1 = d.createElement("TD");
+            var td2 = d.createElement("TD");
+            var td3 = d.createElement("TD");
+            var td4 = d.createElement("TD");
+            var td5 = d.createElement("TD");
+            var td6 = d.createElement("TD");
+            var td7 = d.createElement("TD");
+            row.appendChild(td1);
+            row.appendChild(td2);
+            row.appendChild(td3);
+            row.appendChild(td4);
+            row.appendChild(td5);
+            row.appendChild(td6);
+            row.appendChild(td7);
+            td1.innerHTML = name;
+            td2.innerHTML = surname;
+            td3.innerHTML = status;
+            td4.innerHTML = "0";
+            td5.appendChild(btnmore);
+            td6.appendChild(btndelete);
+            d.getElementById('name').value = "";
+            d.getElementById('surname').value = "";
+            status = d.getElementById('status').value = "";
+        }
+        $(document).ready(function(){
+            $(".del").click(function(){
+                $(this).closest('tr').remove();
+            });
+            $(".more").click(function(){
+
+                var data = {
+                    id: $(this).parents('tr').attr('id'),
+                    name: $(this).parents('tr').find('.fname').html(),
+                    surname: $(this).parents('tr').find('.sname').html(),
+                    status :  $(this).parents('tr').find('.stats').html(),
+                    picture : $(this).parents('tr').find('.imgs').html(),
+                    missings: ''
+                }
+                var obj = JSON.stringify(data);
+                localStorage.setItem('memberdata', obj);
+                document.location.href = "http://localhost/Site/indexcard.html";
+            });
+
+            var result = localStorage.getItem('missings');
+            if ( result != null && result.length != 0 ) {
+                var resultJSON = JSON.parse(result);
+                $("#"+resultJSON.id).find('.miss').html(resultJSON.missings);
+            }
+
+            //var fromlist = JSON.parse(localStorage.getItem('memberdata'));
+            /*if ( missings != null ) {
+                console.log(missings);
+                $("#"+fromlist.id).find('.miss').html(missings.missings);
+            }*/
+        });
+        /* 1
+        var selectedTD;
+        var table = document.getElementsByTagName('table')
+        table.onclick = function(event){
+            var target = event.target;
+            if(target.tagName != 'TD') return;
+            deleteTD(target);
+        }
+        function deleteTD(node)
+        {
+            selectedTd = node;
+            selectedTd.classList.remove('deleteTD')
+        }
+         2
+        function deleteRow(r)
+        {
+            var i=r.parentNode.parentNode.rowIndex;
+            document.getElementById('myTable').deleteRow(i);
+
+
+        }*/
+    </script>
+
+</body>
+
+</html>
